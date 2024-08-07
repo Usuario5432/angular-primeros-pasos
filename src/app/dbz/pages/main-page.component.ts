@@ -1,3 +1,4 @@
+import { DbzService } from '../servicios/dbz.service';
 import { Character } from './../interfaces/character.interface';
 import { Component } from '@angular/core';
 
@@ -7,17 +8,20 @@ import { Component } from '@angular/core';
 })
 
 export class MainPageComponent {
-  public characters:Character[] = [{
-    name: 'Krillin',
-    power: 1000
-  },{
-    name:'Goku',
-    power: 9500
-  }];
 
-  onNewCharacter(c:Character){
-    debugger;
-    console.log('Main page');
+  constructor(private dbzService:DbzService){
+
+  }
+
+  get characters():Character[]{
+    return [...this.dbzService.characters];
+  }
+
+  public onDeleteCharacter(id:string):void{
+    this.dbzService.onDeleteCharacterById(id);
+  }
+  public onNewCharacter(character:Character):void{
+    this.dbzService.addCharacter(character);
   }
 
   public tituloM:string="Lista de personajes";
